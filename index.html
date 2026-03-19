@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoramaRank</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="ph-fill ph-television-simple"></i>
+                <h2>Dorama<span>Rank</span></h2>
+            </div>
+            
+            <nav class="menu">
+                <a href="#" class="menu-item active" id="menu-inicio"><i class="ph ph-squares-four"></i> Início</a>
+                <a href="#" class="menu-item" id="menu-top10"><i class="ph ph-trophy"></i> Meu Top 10</a>
+                <a href="#" class="menu-item" id="menu-assistindo"><i class="ph ph-clock"></i> Assistindo</a>
+            </nav>
+            
+            <div class="user-profile menu-item-perfil" id="menu-perfil">
+                <img id="sidebar-img" src="" alt="Perfil">
+                <span id="sidebar-nome">Meu Perfil</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-box">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" id="input-busca" placeholder="Buscar dorama...">
+                </div>
+                <button class="btn-novo" id="btn-abrir-modal"><i class="ph-bold ph-plus"></i> Novo Dorama</button>
+            </header>
+
+            <section class="content-header">
+                <h1 class="page-title" id="titulo-pagina">Sua Coleção</h1>
+                <div class="filtros" id="container-filtros">
+                    <select class="select-moderno" id="filtro-ordenacao">
+                        <option value="maior-nota">Maior Nota</option>
+                        <option value="recentes">Mais Recentes</option>
+                        <option value="alfabetica">A-Z</option>
+                    </select>
+                </div>
+            </section>
+
+            <div class="grid-doramas" id="grid-doramas"></div>
+
+            <div class="dashboard-container" id="dashboard-container" style="display: none;">
+                <div class="metric-cards">
+                    <div class="metric-card">
+                        <div class="metric-icon"><i class="ph-fill ph-television"></i></div>
+                        <div class="metric-info">
+                            <h4>Total Adicionados</h4>
+                            <span id="dash-total">0</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1);"><i class="ph-fill ph-star"></i></div>
+                        <div class="metric-info">
+                            <h4>Média de Notas</h4>
+                            <span id="dash-media">0.0</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="color: #3b82f6; background: rgba(59, 130, 246, 0.1);"><i class="ph-fill ph-play-circle"></i></div>
+                        <div class="metric-info">
+                            <h4>Eps. Assistidos</h4>
+                            <span id="dash-eps">0</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.1);"><i class="ph-fill ph-clock-countdown"></i></div>
+                        <div class="metric-info">
+                            <h4>Tempo Investido</h4>
+                            <span id="dash-tempo">0h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-section">
+                    <div class="chart-box">
+                        <h3>Distribuição de Status</h3>
+                        <div style="position: relative; height: 250px; width: 100%; display: flex; justify-content: center;">
+                            <canvas id="graficoStatus"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="theme-section">
+                        <h3>Personalizar Tema</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Cor de destaque do aplicativo:</p>
+                        <div class="theme-colors">
+                            <button class="color-btn active" data-color="#e11d48" data-glow="rgba(225, 29, 72, 0.4)" style="background: #e11d48;" title="Rosa Neon"></button>
+                            <button class="color-btn" data-color="#3b82f6" data-glow="rgba(59, 130, 246, 0.4)" style="background: #3b82f6;" title="Azul Cyber"></button>
+                            <button class="color-btn" data-color="#10b981" data-glow="rgba(16, 185, 129, 0.4)" style="background: #10b981;" title="Verde Esmeralda"></button>
+                            <button class="color-btn" data-color="#8b5cf6" data-glow="rgba(139, 92, 246, 0.4)" style="background: #8b5cf6;" title="Roxo Cósmico"></button>
+                            <button class="color-btn" data-color="#f59e0b" data-glow="rgba(245, 158, 11, 0.4)" style="background: #f59e0b;" title="Laranja Outono"></button>
+                        </div>
+                    </div>
+
+                    <div class="theme-section">
+                        <h3>Editar Perfil</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Como quer ser chamado?</p>
+                        <div class="input-with-button" style="width: 100%;">
+                            <input type="text" id="input-nome-perfil" placeholder="Seu Nome" style="background: var(--bg-dark); border: 1px solid var(--border-color); color: white; padding: 0.8rem; border-radius: 10px; width: 100%;">
+                            <button type="button" id="btn-salvar-nome" title="Salvar Nome" style="background: var(--primary); color: white; border: none; border-radius: 10px; width: 45px; cursor: pointer; transition: 0.3s;"><i class="ph-bold ph-check"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-dorama">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-titulo">Adicionar Dorama</h2>
+                <button class="btn-fechar" id="btn-fechar-modal"><i class="ph ph-x"></i></button>
+            </div>
+            <form id="form-dorama" class="modern-form">
+                <input type="hidden" id="dorama-id">
+                <div class="input-group">
+                    <label for="titulo">Título</label>
+                    <div class="input-with-button">
+                        <input type="text" id="titulo" placeholder="Ex: Pousando no Amor" required>
+                        <button type="button" id="btn-buscar-api" title="Buscar dados automaticamente"><i class="ph-bold ph-magnifying-glass"></i></button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="sinopse">Sinopse</label>
+                    <textarea id="sinopse" rows="2" placeholder="Resumo do dorama..."></textarea>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="episodios_assistidos">Assistidos</label>
+                        <input type="number" id="episodios_assistidos" min="0" placeholder="Ex: 5">
+                    </div>
+                    <div class="input-group">
+                        <label for="episodios">Total Eps.</label>
+                        <input type="number" id="episodios" min="1" placeholder="Ex: 16">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="nota">Nota (0 a 10)</label>
+                        <input type="number" id="nota" step="0.1" min="0" max="10" placeholder="9.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option value="Assistindo">Assistindo</option>
+                            <option value="Finalizado">Finalizado</option>
+                            <option value="Quero Assistir">Quero Assistir</option>
+                            <option value="Dropado">Dropado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group" style="display:none;">
+                    <input type="url" id="imagem">
+                    <input type="hidden" id="elenco">
+                </div>
+                <button type="submit" class="btn-salvar">Salvar no Banco</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-detalhes">
+        <div class="modal-content modal-detalhes-content">
+            <button class="btn-fechar" id="btn-fechar-detalhes"><i class="ph ph-x"></i></button>
+            <div class="detalhes-layout">
+                <img id="detalhes-img" src="" alt="Capa">
+                <div class="detalhes-info">
+                    <h2 id="detalhes-titulo">Título</h2>
+                    <div class="detalhes-tags">
+                        <span class="nota-badge-detalhes"><i class="ph-fill ph-star"></i> <span id="detalhes-nota"></span></span>
+                        <span class="status-badge" id="detalhes-status"></span>
+                        <span class="status-badge" style="background: rgba(225, 29, 72, 0.2); color: #fda4af; border: 1px solid rgba(225, 29, 72, 0.3);">
+                            <i class="ph ph-monitor-play"></i> <span id="detalhes-episodios"></span>
+                        </span>
+                    </div>
+                    <div class="detalhes-sinopse-container">
+                        <h3>Sinopse</h3>
+                        <p id="detalhes-sinopse"></p>
+                    </div>
+                    <div class="detalhes-elenco-container">
+                        <h3>Elenco Principal</h3>
+                        <div class="elenco-list" id="detalhes-elenco"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
