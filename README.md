@@ -5,7 +5,7 @@
 ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 ![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
 
-O **DoramaRank** é um aplicativo desktop moderno desenvolvido para gerenciar e catalogar doramas (séries asiáticas). Criado com foco na experiência do usuário (UX) e design responsivo, o sistema consome dados em tempo real e oferece um painel analítico completo do consumo de mídia.
+O **DoramaRank** é um aplicativo desktop desenvolvido para gerenciar e catalogar doramas (séries asiáticas). Criado com foco na experiência do usuário (UX) e design responsivo, o sistema consome dados em tempo real e oferece um painel analítico completo do consumo de mídia.
 
 ## ✨ Funcionalidades Principais
 
