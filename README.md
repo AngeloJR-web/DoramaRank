@@ -21,16 +21,22 @@ Para rodar o projeto localmente na sua máquina, você precisará do [Node.js](h
 
 ```bash
 # Clone o repositório
-git clone [https://github.com/AngeloJR-web/doramarank.git](https://github.com/AngeloJR-web/doramarank.git)
+git clone https://github.com/AngeloJR-web/DoramaRank.git
 
 # Entre na pasta do projeto
-cd doramarank
+cd DoramaRank
 
 # Instale as dependências
 npm install
 
+# Crie o arquivo de configuração e coloque nele sua chave do TMDB
+cp config.example.js config.js
+
 # Rode o aplicativo em modo de desenvolvimento
 npm start
+```
 
-📦 Download do Instalador (.exe)
+A chave do TMDB é gratuita e pode ser criada em [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api). O arquivo `config.js` fica de fora do Git.
+
+## 📦 Download do Instalador (.exe)
 Se você deseja apenas usar o aplicativo no Windows sem compilar o código, acesse a aba Releases e baixe a versão mais recente do arquivo DoramaRank Setup.exe.

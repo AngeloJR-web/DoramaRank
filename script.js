@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron');
 
-// --- SUA CHAVE DA API TMDB AQUI ---
-const TMDB_API_KEY = 'f3d5d83819cc48980d569a8678a4d35d'; 
+// A chave do TMDB fica em config.js, que não vai para o git. O modelo está em config.example.js.
+const TMDB_API_KEY = window.CONFIG?.TMDB_API_KEY ?? '';
 
 // --- ELEMENTOS DO DOM ---
 const root = document.documentElement;
@@ -101,6 +101,7 @@ document.querySelectorAll('.color-btn').forEach(btn => {
 btnBuscarApi.addEventListener('click', async () => {
     const tituloDorama = document.getElementById('titulo').value.trim();
     if (!tituloDorama) return alert('Digite o título antes de buscar!');
+    if (!TMDB_API_KEY) return alert('Coloque sua chave do TMDB no arquivo config.js. O README explica como.');
 
     btnBuscarApi.innerHTML = '<i class="ph ph-spinner ph-spin"></i>';
 
